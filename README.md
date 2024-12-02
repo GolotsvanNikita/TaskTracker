@@ -17,5 +17,5 @@ Task Tracker is a console-based C# application that allows users to manage their
 ## 📦 Installation
   Clone the repository:
    ```bash
-   git clone https://github.com/qwertxfz/TaskTracker
+   git clone https://github.com/qwertxfz/TaskTracker.git
    cd TaskTracker
