@@ -22,7 +22,8 @@ Task Tracker is a console-based C# application that allows users to manage their
 - JSON Serialization for All Tasks: Added functionality to save and load all tasks in JSON format.
 
 ## 📦 Installation
-  **Download zip** - [Download TaskTraker.zip](./TaskTraker.zip) 
+  **Download zip** - [TaskTraker.zip](./TaskTraker.zip)
+  -
   Clone the repository:
    ```bash
    git clone https://github.com/qwertxfz/TaskTracker.git
