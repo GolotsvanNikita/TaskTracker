@@ -15,6 +15,7 @@ namespace TaskTrackerProgram.Model
         public void AddTask(string description, string priority)
         {
             _tasks.Add(new Task { Description = description, Priority = priority, IsCompleted = false });
+            SortTasksByPriority();
         }
 
         public void RemoveTask(string description)
@@ -117,6 +118,59 @@ namespace TaskTrackerProgram.Model
                 }
             }
             return null;
+        }
+        public void SerializeAllTasksToJson(string filePath)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(_tasks, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(filePath, json);
+                Console.WriteLine("All tasks have been serialized to JSON.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while serializing tasks: {ex.Message}");
+            }
+        }
+        public void DeserializeTasksFromJson(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    Console.WriteLine("File not found.");
+                    return;
+                }
+
+                string json = File.ReadAllText(filePath);
+                var tasksFromJson = JsonSerializer.Deserialize<List<Task>>(json);
+
+                if (tasksFromJson != null)
+                {
+                    _tasks.AddRange(tasksFromJson);
+                    SortTasksByPriority();
+                    Console.WriteLine("All tasks have been deserialized and added to the task list.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while deserializing tasks: {ex.Message}");
+            }
+        }
+        private void SortTasksByPriority()
+        {
+            _tasks.Sort((x, y) => GetPriorityValue(y.Priority).CompareTo(GetPriorityValue(x.Priority)));
+        }
+
+        private int GetPriorityValue(string priority)
+        {
+            return priority switch
+            {
+                "high" => 3,
+                "medium" => 2,
+                "low" => 1,
+                _ => 0
+            };
         }
     }
 }

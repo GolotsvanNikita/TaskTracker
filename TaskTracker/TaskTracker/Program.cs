@@ -1,5 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TaskTrackerProgram.Model;
 using Task = TaskTrackerProgram.Model.Task;
 namespace TaskTrackerProgram
@@ -20,7 +23,9 @@ namespace TaskTrackerProgram
                 Console.WriteLine("4. Display Tasks");
                 Console.WriteLine("5. Save Task to JSON");
                 Console.WriteLine("6. Load Task from JSON");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("7. Save all Tasks to JSON");
+                Console.WriteLine("8. Load all Tasks from JSON");
+                Console.WriteLine("9. Exit");
                 Console.Write("Enter your choice: ");
 
                 string choice = Console.ReadLine();
@@ -66,7 +71,6 @@ namespace TaskTrackerProgram
                         Console.Write("Enter task description to save as JSON: ");
                         string taskToSave = Console.ReadLine();
                         Task foundTask = tracker.DescriptionFound(taskToSave);
-
                         if (foundTask == null)
                         {
                             Console.WriteLine("Task not found.");
@@ -75,10 +79,8 @@ namespace TaskTrackerProgram
 
                         Console.Write("Enter file path to save JSON (e.g., C:\\Users\\nameUser\\Desktop\\testTask.json): ");
                         string savePath = Console.ReadLine();
-
-                        if (!Path.IsPathFullyQualified(savePath))
+                        if (savePath.IsIncorrectPath())
                         {
-                            Console.WriteLine("Invalid file path.");
                             break;
                         }
 
@@ -110,8 +112,34 @@ namespace TaskTrackerProgram
                             Console.WriteLine($"Error loading JSON: {ex.Message}");
                         }
                         break;
-
                     case "7":
+                        Console.Write("Enter file path to save JSON (e.g., C:\\Users\\nameUser\\Desktop\\Tasks.json): ");
+                        string save = Console.ReadLine();
+
+                        if (save.IsIncorrectPath())
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tracker.SerializeAllTasksToJson(save);
+                        }
+                        break;
+                    case "8":
+                        Console.Write("Enter file path to load JSON (e.g., C:\\Users\\nameUser\\Desktop\\Tasks.json): ");
+                        string load = Console.ReadLine();
+
+                        if (load.IsIncorrectPath())
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tracker.DeserializeTasksFromJson(load);
+                        }
+                        break;
+
+                    case "9":
                         running = false;
                         Console.WriteLine("Exiting Task Tracker. Goodbye!");
                         break;
@@ -123,6 +151,18 @@ namespace TaskTrackerProgram
 
                 Console.WriteLine();
             }
+        }
+    }
+    public static class BooleanExtension
+    {
+        public static bool IsIncorrectPath(this string path)
+        {
+            if (!Path.IsPathFullyQualified(path))
+            {
+                Console.WriteLine("Invalid file path.");
+                return true;
+            }
+            return false;
         }
     }
 }
