@@ -2,7 +2,7 @@
 
 Task Tracker is a console-based C# application that allows users to manage their tasks. The program supports adding, removing, completing tasks, and saving/loading tasks in JSON format.
 
-## 📋 Features
+## Features
 - **Add tasks** with a description and priority (High, Medium, Low).
 - **Remove tasks** by description.
 - **Mark tasks as completed**.
@@ -13,7 +13,7 @@ Task Tracker is a console-based C# application that allows users to manage their
 - **Deserialize tasks from a JSON file and add them to the current list**.
 - **Automatically sort tasks by priority (High > Medium > Low)**.
 
-## 🛠️ Technologies Used
+## Technologies Used
 - Programming Language: **C#**.
 - Serialization/Deserialization: **Json**.
 
@@ -21,7 +21,7 @@ Task Tracker is a console-based C# application that allows users to manage their
 - Automatic Sorting by Priority: Tasks are now automatically sorted by their priority (High > Medium > Low) whenever the task list is modified.
 - JSON Serialization for All Tasks: Added functionality to save and load all tasks in JSON format.
 
-## 📦 Installation
+## Installation
   **Download zip** - [TaskTraker.zip](./TaskTraker.zip)
   -
   Clone the repository:
